@@ -54,8 +54,8 @@ def merge_data_with_flags(filter, parallel):
     filmssearchres = filmssearch["Search"]
     if len(filmssearchres) == 10:
         secondpage = searchfilms(filter, 2)["Search"]
-        for movie2 in secondpage:
-            filmssearchres.append(movie2)
+        #for movie2 in secondpage:
+            #filmssearchres.append(movie2)
     moviesdetailswithflags = []
     for movie in filmssearchres:
          moviedetails = getmoviedetails(movie["imdbID"])
@@ -82,7 +82,7 @@ def merge_data_with_flags(filter, parallel):
 @app.route("/")
 def index():
     filter = request.args.get("filter", "")
-    parallel = request.args.get("parallel", 1)
+    parallel = request.args.get("parallel","1")
     start = default_timer()
     movies = merge_data_with_flags(filter, parallel)
     end = default_timer()
@@ -93,7 +93,7 @@ def index():
 @app.route("/api/movies")
 def api_movies():
     filter = request.args.get("filter", "")
-    parallel = request.args.get("parallel", "1")
+    parallel = request.args.get("parallel", "0")
     return jsonify(merge_data_with_flags(filter, parallel))    
 
 if __name__ == "__main__":

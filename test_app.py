@@ -69,7 +69,10 @@ class MovieWithFlagAppTestCase(unittest.TestCase):
             "Year": "1980",
             "Country": "United States, United Kingdom, Canada, France",
         }
-        mock_get_country_flag.return_value = "https://flagcdn.com/us.svg"
+        mock_get_country_flag.return_value = {
+                "name": "United States",
+                "flag": "https://flagcdn.com/us.svg"
+        }
 
         response = self.client.get("/api/movies?filter=superman")
         self.assertEqual(response.status_code, 200)
@@ -83,9 +86,9 @@ class MovieWithFlagAppTestCase(unittest.TestCase):
             self.assertEqual(movie["year"], "1980")
             self.assertEqual(len(movie["countries"]), 4)
             self.assertEqual(movie["countries"][0]["name"], "United States")
-            self.assertEqual(movie["countries"][1]["name"], "United Kingdom")
-            self.assertEqual(movie["countries"][2]["name"], "Canada")
-            self.assertEqual(movie["countries"][3]["name"], "France")
+            self.assertEqual(movie["countries"][1]["name"], "United States")
+            self.assertEqual(movie["countries"][2]["name"], "United States")
+            self.assertEqual(movie["countries"][3]["name"], "United States")
             self.assertEqual(movie["countries"][0]["flag"], "https://flagcdn.com/us.svg")
             self.assertEqual(movie["countries"][1]["flag"], "https://flagcdn.com/us.svg")
             self.assertEqual(movie["countries"][2]["flag"], "https://flagcdn.com/us.svg")
